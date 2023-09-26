@@ -5,7 +5,7 @@ from apps.common.models import BaseModel
 
 
 class Product(BaseModel):
-    category = models.ForeignKey('products.Category', on_delete=models.CASCADE)
+    category = models.ForeignKey('products.Category', on_delete=models.CASCADE, null=True,)
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField()

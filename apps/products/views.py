@@ -43,7 +43,6 @@ class ProductCreateAPIView(APIView):
     # permission_classes = [permissions.IsAdminUser, ]
     def post(self, request):
         serializer = serializers.ProductCreateSerializer(data=request.data)
-        print(f"bu request in view: {request.data}")
         if serializer.is_valid():
             serializer.save()
             return Response(
@@ -61,3 +60,30 @@ class ProductCreateAPIView(APIView):
                     "error": serializer.errors
                 }
             )
+
+
+# class ProductUpdateAPIView(APIView):
+#     def put(self, request, id):
+#         product = Product.objects.get(id=id)
+#         serializer = serializers.ProductUpdateSerializer(instance=product, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response({'success': 'True', 'data': serializer.data})
+#         else:
+#             return Response({'success': 'False', 'errror': serializer.errors})
+#
+#     def get(self, request, id):
+#         product = Product.objects.get(id=id)
+#         serializer = serializers.ProductUpdateSerializer(product)
+#         return Response(serializer.data)
+
+
+class ProductUpdateAPIView(APIView):
+    def put(self, request, product_id):
+        instance = Product.objects.get(id=product_id)
+        serializer = serializers.ProductsSerializer(instance=instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
